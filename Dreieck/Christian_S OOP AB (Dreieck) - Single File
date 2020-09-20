@@ -1,0 +1,154 @@
+/*
+1)
+Ein Objekt hat eine Identität, Zustand und Verhalten - Variablennamen, Attribute und Methoden
+
+2)
+Unter dem Geheimnisprinzip versteht man, dass die Attribute als privat klassifiziert sind und damit von außerhalb keinen direkten zugriff möglich ist, sondern immer nur über die jeweiligen Get und Set Methoden. Dadurch wird die Integrität bewahrt. 
+
+3)
+GetkmStand, SetkmStand
+
+4)
+public int GetkmStand()
+{
+    return kmStand;
+}
+
+5)
+Man überprüft auf Validen Input.
+*/
+
+
+//Ich habe den ganzen Arbeitsbogen in einer CS-File bearbeitet. Ohne angehängte Solution und ohne weitere Klassen auszulagern. Nicht die feine Englische aber so habe //ich immer alles beisammen.
+
+using System;
+
+namespace Dreiecke
+{
+    class Proramm
+    {
+        public void Main(string[] args)
+        {
+            RechtwinkligesDreieck dreieck_1 = new RechtwinkligesDreieck();
+
+            Console.WriteLine("Wert für Winkel alpha. Er muss größer 0 und kleiner 90")
+            double winkel = 0.0;
+            bool check = false;
+
+            do
+            {
+                string text = Console.ReadLine();
+                if (Double.TryParse(text, out winkel))
+                {
+                    bool eintragung = dreieck_1.Setalpha(winkel);
+                    if (eintragung)
+                    {
+                        check = true;
+                    }
+                    else
+                    {
+                        check = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Nicht verwertbarer Wert für Alpha eingegeben." +
+                        " Bitte wiederholen korrigieren Sie ihre Eingabe");
+                    check = false;
+                }
+
+            } while (check);
+        }
+    }
+}
+
+class RechtwinkligesDreieck
+{
+    public RechtwinkligesDreieck() { };
+    private double hypotenuse;
+    private double alpha;
+
+    #region hypotenuse
+    public double Gethypothenuse()
+    {
+        return this.hypothenuse;
+    }
+
+    public void Sethyothenuse(double hypothenuse)
+    {
+        this.hypothenuse = hypothenuse;
+    }
+    #endregion
+
+    #region alpha
+    //Aufgabe 7
+    public double Getalpha()
+    {
+        return this.alpha;
+    }
+
+    public bool Setalpha(double alpha)
+    {
+        bool check = false;
+        if (alpha < 0 && aplha > 90)
+        {
+            this.alpha = alpha;
+            check true;
+        }
+        return check;
+    }
+    #endregion
+
+
+    public double GetBeta()
+    {
+
+        if (this.alpha == null)
+        {
+            throw NullReferenceException;
+        }
+        return 90 - this.alpha;
+    }
+
+    public double GetKathete_A()
+    {
+        double SeiteA = 0.0;
+        if (this.alpha == null)
+        {
+            throw NullReferenceException;
+        }
+        double AlphaBogenmaß = this.alpha / 180 * Math.PI;
+        double sinusAlpha = Math.Sin(AlphaBogenmaß);
+        if (this.hypotenuse == null)
+        {
+            throw NullReferenceException;
+        }
+        SeiteA = his.hypotenuse * sinusAlphaBogenmaß;
+        return SeiteA;
+
+
+        //ODER KURZ: 
+        //if (this.alpha == null || this.hypotenuse == null)
+        //{
+        //    throw NullReferenceException;
+        //}
+        //return this.hypotenuse * Math.Sin(this.alpha / 180 * Math.Pi);
+    }
+
+    public double GetKathete_B()
+    {
+        if (this.alpha == null || this.hypotenuse == null)
+            throw NullReferenceException;
+        double SeiteA = GetKathete_A();
+        double HypoHoch2 = Math.Pow(this.hypotenuse, 2);
+        double AnkatheteHoch2 = Math.Pow(SeiteA, 2);
+        double SeiteB = Math.Sqrt(HypoHoch2 + AnkatheteHoch2);
+        return SeiteB;
+
+        //ODER KURZ:
+        //if (this.alpha == null || this.hypotenuse == null)
+        //    throw NullReferenceException;
+        //return Math.Sqrt(Math.Pow(this.hypotenuse, 2) + Math.Pow(GetKathete_A(), 2))
+
+    }
+}
